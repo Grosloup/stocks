@@ -24,6 +24,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        lang: %locale%
+        charset: utf-8
 
 # Assetic Configuration
 assetic:
