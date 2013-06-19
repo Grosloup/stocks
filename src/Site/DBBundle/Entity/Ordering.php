@@ -2,12 +2,13 @@
 
 namespace Site\DBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Ordering
  *
- * @ORM\Table()
+ * @ORM\Table(name="ordering")
  * @ORM\Entity(repositoryClass="Site\DBBundle\Entity\OrderingRepository")
  */
 class Ordering  extends BaseEntity
@@ -87,10 +88,16 @@ class Ordering  extends BaseEntity
      */
     private $archived;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Site\DBBundle\Entity\OrderedItem", mappedBy="ordering")
+     */
+    protected $orderedItems;
+
 
     public function __construct()
     {
         $this->state = self::STATE_DRAFT;
+        $this->orderedItems = new ArrayCollection();
         $now = new \DateTime();
         $now = $now->setTimezone(new \DateTimeZone($this->timezone))->format($this->dateFormat);
         $this->ref = md5(uniqid().$now);
@@ -366,5 +373,38 @@ class Ordering  extends BaseEntity
     public function getStates()
     {
         return $this->states;
+    }
+
+    /**
+     * Add orderedItems
+     *
+     * @param \Site\DBBundle\Entity\OrderedItem $orderedItems
+     * @return Ordering
+     */
+    public function addOrderedItem(\Site\DBBundle\Entity\OrderedItem $orderedItems)
+    {
+        $this->orderedItems[] = $orderedItems;
+    
+        return $this;
+    }
+
+    /**
+     * Remove orderedItems
+     *
+     * @param \Site\DBBundle\Entity\OrderedItem $orderedItems
+     */
+    public function removeOrderedItem(\Site\DBBundle\Entity\OrderedItem $orderedItems)
+    {
+        $this->orderedItems->removeElement($orderedItems);
+    }
+
+    /**
+     * Get orderedItems
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderedItems()
+    {
+        return $this->orderedItems;
     }
 }

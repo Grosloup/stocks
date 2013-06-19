@@ -2,6 +2,7 @@
 
 namespace Site\DBBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -64,6 +65,15 @@ class Item extends BaseEntity
      */
     protected $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Site\DBBundle\Entity\OrderedItem", mappedBy="item")
+     */
+    protected $itemOrderings;
+
+    public function __construct()
+    {
+        $this->itemOrderings = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -211,5 +221,38 @@ class Item extends BaseEntity
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Add itemOrderings
+     *
+     * @param \Site\DBBundle\Entity\OrderedItem $itemOrderings
+     * @return Item
+     */
+    public function addItemOrdering(\Site\DBBundle\Entity\OrderedItem $itemOrderings)
+    {
+        $this->itemOrderings[] = $itemOrderings;
+    
+        return $this;
+    }
+
+    /**
+     * Remove itemOrderings
+     *
+     * @param \Site\DBBundle\Entity\OrderedItem $itemOrderings
+     */
+    public function removeItemOrdering(\Site\DBBundle\Entity\OrderedItem $itemOrderings)
+    {
+        $this->itemOrderings->removeElement($itemOrderings);
+    }
+
+    /**
+     * Get itemOrderings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getItemOrderings()
+    {
+        return $this->itemOrderings;
     }
 }
