@@ -1,0 +1,26 @@
+{% extends "FrontBundle:Layouts:master.html.twig" %}
+
+{% block body%}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h3>Item =>items</h3>
+                <ul>
+                    <li>nom: name</li>
+                    <li>slug -généré</li>
+                    <li>description</li>
+                    <li>poids: weight</li>
+                    <li>conditionnement: packaging</li>
+                    <li>catégorie: category -généré</li>
+                </ul>
+
+                <h3>Category => categories</h3>
+                <ul>
+                    <li>nom: name</li>
+                    <li>items -généré</li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

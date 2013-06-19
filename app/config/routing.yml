@@ -1,3 +1,7 @@
+doc:
+    resource: "@DocBundle/Resources/config/routing.yml"
+    prefix:   /
+
 front:
     resource: "@FrontBundle/Resources/config/routing.yml"
     prefix:   /

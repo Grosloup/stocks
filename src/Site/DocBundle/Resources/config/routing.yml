@@ -1,0 +1,3 @@
+doc_homepage:
+    pattern:  /docs
+    defaults: { _controller: DocBundle:Default:index }
