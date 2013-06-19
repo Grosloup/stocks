@@ -1,3 +1,7 @@
+db:
+    resource: "@DBBundle/Resources/config/routing.yml"
+    prefix:   /
+
 doc:
     resource: "@DocBundle/Resources/config/routing.yml"
     prefix:   /

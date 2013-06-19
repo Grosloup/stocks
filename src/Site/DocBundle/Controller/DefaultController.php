@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('DocBundle:Default:index.html.twig');
     }
+
+    public function gedmoAction()
+    {
+        return $this->render('DocBundle:Default:gedmo.html.twig');
+    }
 }

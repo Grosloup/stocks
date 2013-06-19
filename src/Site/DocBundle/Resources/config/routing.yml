@@ -1,3 +1,7 @@
 doc_homepage:
     pattern:  /docs
     defaults: { _controller: DocBundle:Default:index }
+
+doc_gedmo:
+    pattern: /docs/gedmo
+    defaults: { _controller: DocBundle:Default:gedmo }

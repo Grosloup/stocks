@@ -1,0 +1,29 @@
+{% extends "FrontBundle:Layouts:master.html.twig" %}
+
+{% block ngapp%}ng-app="app"{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="span2">
+                <ul class="nav nav-list">
+                    <li><a href="{{ path("doc_gedmo") }}#/tree">tree</a></li>
+                    <li><a href="{{ path("doc_gedmo") }}#/timestampable">timestampable</a></li>
+                    <li><a href="{{ path("doc_gedmo") }}#/sluggable">sluggable</a></li>
+                </ul>
+            </div>
+            <ng-view></ng-view>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footscripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="/js/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="/js/vendor/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/js/vendor/showdown.js"></script>
+    <script type="text/javascript" src="/js/apps/docs/docs.js"></script>
+{% endblock %}

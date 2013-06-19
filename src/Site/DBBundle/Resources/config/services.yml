@@ -1,0 +1,7 @@
+parameters:
+#    db.example.class: Site\DBBundle\Example
+
+services:
+#    db.example:
+#        class: %db.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
