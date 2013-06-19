@@ -3,7 +3,7 @@
 namespace Site\DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Ordering
  *
@@ -42,7 +42,7 @@ class Ordering  extends BaseEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -64,21 +64,21 @@ class Ordering  extends BaseEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="sendAt", type="string", length=255)
+     * @ORM\Column(name="sendAt", type="string", length=255, nullable=true)
      */
     private $sendAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deliveredAt", type="string", length=255)
+     * @ORM\Column(name="deliveredAt", type="string", length=255, nullable=true)
      */
     private $deliveredAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="canceledAt", type="string", length=255)
+     * @ORM\Column(name="canceledAt", type="string", length=255, nullable=true)
      */
     private $canceledAt;
 
@@ -87,6 +87,14 @@ class Ordering  extends BaseEntity
      */
     private $archived;
 
+
+    public function __construct()
+    {
+        $this->state = self::STATE_DRAFT;
+        $now = new \DateTime();
+        $now = $now->setTimezone(new \DateTimeZone($this->timezone))->format($this->dateFormat);
+        $this->ref = md5(uniqid().$now);
+    }
 
     /**
      * Get id
@@ -106,6 +114,9 @@ class Ordering  extends BaseEntity
      */
     public function setRef($ref)
     {
+        if($this->ref){
+            return $this;
+        }
         $this->ref = $ref;
 
         return $this;
@@ -224,12 +235,18 @@ class Ordering  extends BaseEntity
 
     public function getSendAtIso8601()
     {
+        if(!$this->getSendAt()){
+            return null;
+        }
         $date = new \DateTime($this->getSendAt(), new \DateTimeZone($this->timezone));
         return $date->format(\DateTime::ISO8601);
     }
 
     public function getSendAtToDateTime()
     {
+        if(!$this->getSendAt()){
+            return null;
+        }
         $date = new \DateTime($this->getSendAt(), new \DateTimeZone($this->timezone));
         return $date;
     }
@@ -264,12 +281,19 @@ class Ordering  extends BaseEntity
 
     public function getDeliveredAtIso8601()
     {
+        if(!$this->getDeliveredAt()){
+            return null;
+        }
         $date = new \DateTime($this->getDeliveredAt(), new \DateTimeZone($this->timezone));
         return $date->format(\DateTime::ISO8601);
     }
 
     public function geDeliveredAtToDateTime()
     {
+        if(!$this->getDeliveredAt()){
+            return null;
+        }
+
         $date = new \DateTime($this->getDeliveredAt(), new \DateTimeZone($this->timezone));
         return $date;
     }
@@ -303,12 +327,20 @@ class Ordering  extends BaseEntity
 
     public function getCanceledAtIso8601()
     {
+
+        if(!$this->getCanceledAt()){
+            return null;
+        }
         $date = new \DateTime($this->getCanceledAt(), new \DateTimeZone($this->timezone));
         return $date->format(\DateTime::ISO8601);
     }
 
     public function getCanceledAtToDateTime()
     {
+        if(!$this->getCanceledAt()){
+            return null;
+        }
+
         $date = new \DateTime($this->getCanceledAt(), new \DateTimeZone($this->timezone));
         return $date;
     }

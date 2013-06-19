@@ -40,21 +40,21 @@ class Item extends BaseEntity
     /**
      * @var float
      *
-     * @ORM\Column(name="weight", type="float")
+     * @ORM\Column(name="weight", type="float", nullable=true)
      */
     private $weight;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="packaging", type="string", length=255)
+     * @ORM\Column(name="packaging", type="string", length=255, nullable=true)
      */
     private $packaging;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
