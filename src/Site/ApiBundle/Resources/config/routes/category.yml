@@ -1,0 +1,3 @@
+category_homepage:
+    pattern: /category
+    defaults: { _controller: ApiBundle:Category:index }

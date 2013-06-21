@@ -1,0 +1,3 @@
+category:
+    resource: "@ApiBundle/Resources/config/routes/category.yml"
+    prefix:   /
