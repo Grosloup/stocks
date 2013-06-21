@@ -70,9 +70,15 @@ class Item extends BaseEntity
      */
     protected $itemOrderings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Site\DBBundle\Entity\Bookmark", mappedBy="item")
+     */
+    protected $users;
+
     public function __construct()
     {
         $this->itemOrderings = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -226,22 +232,22 @@ class Item extends BaseEntity
     /**
      * Add itemOrderings
      *
-     * @param \Site\DBBundle\Entity\OrderedItem $itemOrderings
+     * @param OrderedItem $itemOrderings
      * @return Item
      */
-    public function addItemOrdering(\Site\DBBundle\Entity\OrderedItem $itemOrderings)
+    public function addItemOrdering(OrderedItem $itemOrderings)
     {
         $this->itemOrderings[] = $itemOrderings;
-    
+
         return $this;
     }
 
     /**
      * Remove itemOrderings
      *
-     * @param \Site\DBBundle\Entity\OrderedItem $itemOrderings
+     * @param OrderedItem $itemOrderings
      */
-    public function removeItemOrdering(\Site\DBBundle\Entity\OrderedItem $itemOrderings)
+    public function removeItemOrdering(OrderedItem $itemOrderings)
     {
         $this->itemOrderings->removeElement($itemOrderings);
     }
@@ -249,10 +255,43 @@ class Item extends BaseEntity
     /**
      * Get itemOrderings
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getItemOrderings()
     {
         return $this->itemOrderings;
+    }
+
+    /**
+     * Add users
+     *
+     * @param Bookmark $users
+     * @return Item
+     */
+    public function addUser(Bookmark $users)
+    {
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param Bookmark $users
+     */
+    public function removeUser(Bookmark $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
