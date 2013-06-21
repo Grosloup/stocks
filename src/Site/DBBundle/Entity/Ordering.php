@@ -3,6 +3,7 @@
 namespace Site\DBBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
@@ -10,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="ordering")
  * @ORM\Entity(repositoryClass="Site\DBBundle\Entity\OrderingRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Ordering  extends BaseEntity
 {
@@ -98,9 +100,11 @@ class Ordering  extends BaseEntity
     {
         $this->state = self::STATE_DRAFT;
         $this->orderedItems = new ArrayCollection();
-        $now = new \DateTime();
-        $now = $now->setTimezone(new \DateTimeZone($this->timezone))->format($this->dateFormat);
-        $this->ref = md5(uniqid().$now);
+        $date = new \DateTime(null, new \DateTimeZone($this->timezone));
+        $day = $date->format("z");
+        $week = $date->format("W");
+        $year = $date->format("Y");
+        $this->ref = "Y".$year."W".$week."D".$day."-tmp";
     }
 
     /**
@@ -137,6 +141,24 @@ class Ordering  extends BaseEntity
     public function getRef()
     {
         return $this->ref;
+    }
+
+    /**
+     *
+     * @ORM\PreUpdate
+     */
+    public function updateRef(PreUpdateEventArgs $event)
+    {
+        if($event->hasChangedField("state")){
+            if($event->getOldValue("state") == self::STATE_DRAFT && $event->getNewValue("state") == self::STATE_PENDING){
+                $date = new \DateTime(null, new \DateTimeZone($this->timezone));
+                $day = $date->format("z");
+                $week = $date->format("W");
+                $year = $date->format("Y");
+                $ref = "Y".$year."W".$week."D".$day."-".substr($this->ref, 0, strpos($this->ref,"-"));
+                $event->setNewValue("ref",$ref);
+            }
+        }
     }
 
     /**
@@ -384,7 +406,7 @@ class Ordering  extends BaseEntity
     public function addOrderedItem(\Site\DBBundle\Entity\OrderedItem $orderedItems)
     {
         $this->orderedItems[] = $orderedItems;
-    
+
         return $this;
     }
 
@@ -401,7 +423,7 @@ class Ordering  extends BaseEntity
     /**
      * Get orderedItems
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrderedItems()
     {

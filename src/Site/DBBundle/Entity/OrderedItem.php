@@ -87,7 +87,7 @@ class OrderedItem extends BaseEntity
      * Set quantity
      *
      * @param integer $quantity
-     * @return OrederedItems
+     * @return OrderedItem
      */
     public function setQuantity($quantity)
     {
@@ -110,7 +110,7 @@ class OrderedItem extends BaseEntity
      * Set totalWeight
      *
      * @param float $totalWeight
-     * @return OrederedItems
+     * @return OrderedItem
      */
     public function setTotalWeight($totalWeight)
     {
@@ -133,7 +133,7 @@ class OrderedItem extends BaseEntity
      * Set state
      *
      * @param string $state
-     * @return OrederedItems
+     * @return OrderedItem
      */
     public function setState($state)
     {
@@ -160,20 +160,20 @@ class OrderedItem extends BaseEntity
     /**
      * Set ordering
      *
-     * @param \Site\DBBundle\Entity\Ordering $ordering
+     * @param Ordering $ordering
      * @return OrderedItem
      */
-    public function setOrdering(\Site\DBBundle\Entity\Ordering $ordering = null)
+    public function setOrdering(Ordering $ordering = null)
     {
         $this->ordering = $ordering;
-    
+
         return $this;
     }
 
     /**
      * Get ordering
      *
-     * @return \Site\DBBundle\Entity\Ordering 
+     * @return Ordering
      */
     public function getOrdering()
     {
@@ -183,20 +183,20 @@ class OrderedItem extends BaseEntity
     /**
      * Set item
      *
-     * @param \Site\DBBundle\Entity\Item $item
+     * @param Item $item
      * @return OrderedItem
      */
-    public function setItem(\Site\DBBundle\Entity\Item $item = null)
+    public function setItem(Item $item = null)
     {
         $this->item = $item;
-    
+
         return $this;
     }
 
     /**
      * Get item
      *
-     * @return \Site\DBBundle\Entity\Item 
+     * @return Item
      */
     public function getItem()
     {
