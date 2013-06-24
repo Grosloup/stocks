@@ -9,6 +9,7 @@ namespace Site\BaseBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends Controller
 {
@@ -27,5 +28,16 @@ class BaseController extends Controller
     protected function getRepo($name)
     {
         return $this->getEm()->getRepository($name);
+    }
+
+    protected function getContent(Request $request)
+    {
+        $params = [];
+
+        $content = $request->getContent();
+        if($content){
+            $params = json_decode($content, true);
+        }
+        return $params;
     }
 }

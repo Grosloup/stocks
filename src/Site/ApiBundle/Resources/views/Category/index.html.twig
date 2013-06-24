@@ -1,11 +1,64 @@
 {% extends "FrontBundle:Layouts:master.html.twig" %}
 
+{% block ngapp%}data-ng-app="app"{% endblock %}
 {% block body %}
+    <div class="container" data-ng-controller="MainCtrl">
+        <script type="text/ng-template" id="cat_tree.html">
+            {§ c.get('name') §}
+            <ul >
+                <li ng-repeat="c in c.children.toArray()" ng-include="'cat_tree.html'"></li>
+            </ul>
+        </script>
+        <div class="row">
+            <div class="span3">
+                <ul ng-show="showTree">
+                    <li ng-repeat="c in categories" ng-include="'cat_tree.html'" ng-show="c.parent == null"></li>
+                </ul>
+                <p ng-hide="showTree">
+                    il n'y a pas de catégorie enregistrées en base de données.
+                </p>
+            </div>
+            <div class="span9">
+                <h3>Catégories</h3>
 
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="name">Nom</label>
+                        <div class="controls">
+                            <input type="text" name="" id="" ng-model="newCat.name">
+                        </div>
+                    </div>
+                    <div class="control-group" ng-show="showSelect">
+                        <label class="control-label" for="parent">Nom de la catégorie mère</label>
+                        <div class="controls">
+                            <select ng-model="newCat.parent" name="" id="" ng-options="c.get('name') for c in categories">
+                                <option value="">pas de parent</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" ng-click="save()">save</button>
+                    </div>
+                </form>
+
+
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block footscripts %}
     {{ parent() }}
     <script type="text/javascript" src="/js/vendor/angular.min.js"></script>
     <script type="text/javascript" src="/js/vendor/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/js/vendor/elephant.js"></script>
+    <script type="text/javascript" src="/js/apps/categories/categories.js"></script>
+    <script type="text/javascript" src="/js/apps/categories/app-categories.js"></script>
 {% endblock %}
